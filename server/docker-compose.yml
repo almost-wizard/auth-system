@@ -1,0 +1,19 @@
+version: '3.1'
+
+volumes:
+  auth_system_postgres:
+
+services:
+  auth_system_postgres:
+    env_file: .env
+    image: postgres
+    restart: always
+    container_name: auth_system_postgres
+    environment:
+      POSTGRES_DB: "auth_system"
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - auth_system_postgres:/var/lib/postgresql/data
+    ports:
+      - ${POSTGRES_PORT:-5432}:5432
