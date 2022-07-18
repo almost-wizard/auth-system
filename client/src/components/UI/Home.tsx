@@ -1,14 +1,15 @@
 import React from "react";
 import { FormattedMessage as FM } from "react-intl";
-import { useSelector } from "react-redux";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
 
-const Home = () => {
-  const isAuthenticated = useSelector(
-    (state) => state.authentication.isAuthenticated
+const Home: React.FC = () => {
+  const isAuthenticated = useTypedSelector(
+    (state) => state.auth.isAuthenticated
   );
-  const user = useSelector((state) => state.authentication.user);
+  const user = useTypedSelector((state) => state.auth.user);
+  
 
-  if (isAuthenticated && !user) {
+  if (isAuthenticated && !user) {   // FixMe // Сделать нормальный лоадер используя loading из state
     return <p>...</p>;
   }
 
@@ -24,7 +25,7 @@ const Home = () => {
         <p className="lead">
           <FM
             id="home_page_text_authorized"
-            values={{ name: `${user.first_name} ${user.last_name}` }}
+            values={{ name: `${user?.first_name} ${user?.last_name}` }}
           />
         </p>
       ) : (

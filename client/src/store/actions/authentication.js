@@ -1,4 +1,4 @@
-import AuthenticationService from "../../API/services/AuthenticationService";
+import AuthService from "../../API/services/AuthService";
 import { getCookie } from "../../utils/cookie";
 import {
   ACTIVATION_FAIL,
@@ -22,7 +22,7 @@ export const load_user = () => async (dispatch) => {
   const token = getCookie("access");
   if (token) {
     try {
-      const res = await AuthenticationService.load_user();
+      const res = await AuthService.load_user();
       dispatch({
         type: USER_LOADED_SUCCESS,
         payload: res.data,
@@ -41,7 +41,7 @@ export const load_user = () => async (dispatch) => {
 
 export const sign_in = (email, password) => async (dispatch) => {
   try {
-    const res = await AuthenticationService.sign_in(email, password);
+    const res = await AuthService.sign_in(email, password);
     dispatch({
       type: SIGN_IN_SUCCESS,
       payload: res.data,
@@ -58,7 +58,7 @@ export const sign_in = (email, password) => async (dispatch) => {
 export const sign_up =
   (first_name, last_name, email, password) => async (dispatch) => {
     try {
-      await AuthenticationService.sign_up(
+      await AuthService.sign_up(
         first_name,
         last_name,
         email,
@@ -76,7 +76,7 @@ export const sign_up =
 
 export const verify = (uid, token) => async (dispatch) => {
   try {
-    await AuthenticationService.verify(uid, token);
+    await AuthService.verify(uid, token);
     dispatch({
       type: ACTIVATION_SUCCESS,
     });
@@ -90,7 +90,7 @@ export const verify = (uid, token) => async (dispatch) => {
 export const google_authenticate = (state, code) => async (dispatch) => {
   if (state && code && !getCookie("access")) {
     try {
-      const res = await AuthenticationService.google_authenticate(state, code);
+      const res = await AuthService.google_authenticate(state, code);
       dispatch({
         type: GOOGLE_AUTH_SUCCESS,
         payload: res.data,
@@ -107,7 +107,7 @@ export const google_authenticate = (state, code) => async (dispatch) => {
 
 export const reset_password = (email) => async (dispatch) => {
   try {
-    await AuthenticationService.reset_password(email);
+    await AuthService.reset_password(email);
     dispatch({
       type: PASSWORD_RESET_SUCCESS,
     });
@@ -121,7 +121,7 @@ export const reset_password = (email) => async (dispatch) => {
 export const reset_password_confirm =
   (uid, token, new_password) => async (dispatch) => {
     try {
-      await AuthenticationService.reset_password_confirm(
+      await AuthService.reset_password_confirm(
         uid,
         token,
         new_password

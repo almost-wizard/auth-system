@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { FormattedMessage as FM, useIntl } from "react-intl";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import AuthenticationService from "../../API/services/AuthenticationService";
+import AuthService from "../../API/services/AuthService";
 import { sign_in } from "../../store/actions/authentication";
 import InputGroup from "../UI/InputGroup";
 
@@ -25,7 +25,7 @@ const SignIn = () => {
   };
 
   const continue_with_google = async () => {
-    const res = await AuthenticationService.continue_with_google();
+    const res = await AuthService.continue_with_google();
     window.location.replace(res.data.authorization_url);
   };
 

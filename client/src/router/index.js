@@ -1,11 +1,11 @@
 import { Navigate } from "react-router-dom";
-import Activate from "../components/authentication/Activate";
-import Google from "../components/authentication/Google";
-import ResetPassword from "../components/authentication/ResetPassword";
-import ResetPasswordConfirm from "../components/authentication/ResetPasswordConfirm";
-import SignIn from "../components/authentication/SignIn";
-import SignOut from "../components/authentication/SignOut";
-import SignUp from "../components/authentication/SignUp";
+import Activate from "../components/auth/Activate";
+import Google from "../components/auth/Google";
+import ResetPassword from "../components/auth/ResetPassword";
+import ResetPasswordConfirm from "../components/auth/ResetPasswordConfirm";
+import SignIn from "../components/auth/SignIn";
+import SignOut from "../components/auth/SignOut";
+import SignUp from "../components/auth/SignUp";
 import Error from "../components/UI/Error";
 import Home from "../components/UI/Home";
 

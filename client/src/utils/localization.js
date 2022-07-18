@@ -16,12 +16,12 @@ export const get_current_locale = () => {
 };
 
 export const get_representative_locales = () => {
-  const _languages = [];
+  const _locales = [];
   Object.keys(LOCALES).forEach((key) => {
-    _languages.push({
+    _locales.push({
       name: LOCALES[key].localized_name,
       code: LOCALES[key].code,
     });
   });
-  return _languages;
+  return _locales;
 };

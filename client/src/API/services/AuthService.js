@@ -2,7 +2,7 @@ import axios from "axios";
 import $api from "..";
 import { API_URL } from "../../data/API";
 
-export default class AuthenticationService {
+export default class AuthService {
   static async load_user() {
     return $api.get(`/auth/users/me/`);
   }

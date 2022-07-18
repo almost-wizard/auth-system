@@ -1,11 +1,11 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { commonRoutes, privateRoutes, publicRoutes } from "../router";
-import { useSelector } from "react-redux";
+import { useTypedSelector } from "../hooks/useTypedSelector";
 
-const AppRouter = () => {
-  const isAuthenticated = useSelector(
-    (state) => state.authentication.isAuthenticated
+const AppRouter: React.FC = () => {
+  const isAuthenticated = useTypedSelector(
+    (state) => state.auth.isAuthenticated
   );
 
   return (

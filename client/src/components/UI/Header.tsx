@@ -1,14 +1,14 @@
 import React from "react";
 import { FormattedMessage as FM } from "react-intl";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { set_language } from "../../store/actions/language";
+import { useActions } from "../../hooks/useActions";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { get_representative_locales } from "../../utils/localization";
 
-const Header = () => {
-  const dispatch = useDispatch();
-  const isAuthenticated = useSelector(
-    (state) => state.authentication.isAuthenticated
+const Header: React.FC = () => {
+  const { set_locale } = useActions();
+  const isAuthenticated = useTypedSelector(
+    (state) => state.auth.isAuthenticated
   );
   const location = useLocation().pathname.split("/")[1];
 
@@ -78,7 +78,7 @@ const Header = () => {
                 <li key={code}>
                   <button
                     className="btn dropdown-item"
-                    onClick={() => dispatch(set_language(code))}
+                    onClick={() => set_locale(code)}
                   >
                     {name}
                   </button>

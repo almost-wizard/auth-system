@@ -1,18 +1,18 @@
+import React from "react";
 import { IntlProvider } from "react-intl";
-import { useSelector } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { DEFAULT_LOCALE } from "../data/localization";
+import { DEFAULT_LOCALE, I18N_MESSAGES } from "../data/localization";
 import Layout from "./Layout";
 import "../styles/App.css";
+import { useTypedSelector } from "../hooks/useTypedSelector";
 
-const App = () => {
-  const locale = useSelector((state) => state.language.locale);
-  const messages = useSelector((state) => state.language.messages);
+const App: React.FC = () => {
+  const locale = useTypedSelector((state) => state.locale.locale);
 
   return (
     <BrowserRouter>
       <IntlProvider
-        messages={messages[locale]}
+        messages={I18N_MESSAGES[locale]}
         locale={locale}
         defaultLocale={DEFAULT_LOCALE}
       >
