@@ -1,17 +1,18 @@
 import React from "react";
 import { FormattedMessage as FM } from "react-intl";
-import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { verify } from "../../store/actions/authentication";
+import { useActions } from "../../hooks/useActions";
 
-const Activate = () => {
-  const dispatch = useDispatch();
+const Activate: React.FC = () => {
+  const { verify } = useActions();
   const queryParams = useParams();
 
   const onSubmit = () => {
     const uid = queryParams.uid;
     const token = queryParams.token;
-    dispatch(verify(uid, token));
+    if (uid && token) {
+      verify(uid, token);
+    }
   };
 
   return (

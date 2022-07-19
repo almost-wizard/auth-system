@@ -1,10 +1,10 @@
+import React from "react";
 import { Navigate, useSearchParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { google_authenticate } from "../../store/actions/authentication";
+import { useActions } from "../../hooks/useActions";
 
-const Google = () => {
-  const dispatch = useDispatch();
+const Google: React.FC = () => {
+  const { google_authenticate } = useActions();
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
@@ -12,11 +12,11 @@ const Google = () => {
     const code = searchParams.get("code");
 
     if (state && code) {
-      dispatch(google_authenticate(state, code));
+      google_authenticate(state, code);
     }
   }, [searchParams]);
 
-  return <Navigate to="/" />
+  return <Navigate to="/" />;
 };
 
 export default Google;

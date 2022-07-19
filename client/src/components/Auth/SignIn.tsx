@@ -1,26 +1,29 @@
 import React, { useRef } from "react";
 import { FormattedMessage as FM, useIntl } from "react-intl";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import AuthService from "../../API/services/AuthService";
-import { sign_in } from "../../store/actions/authentication";
+import { useActions } from "../../hooks/useActions";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
 import InputGroup from "../UI/InputGroup";
 
-const SignIn = () => {
-  const dispatch = useDispatch();
+const SignIn: React.FC = () => {
+  const { isAuthenticated } = useTypedSelector((store) => store.auth);
+  const { sign_in } = useActions();
   const intl = useIntl();
 
-  const email = useRef();
-  const password = useRef();
+  const email = useRef<HTMLInputElement>(null);
+  const password = useRef<HTMLInputElement>(null);
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const expected_errors = [
-      email.current.dataset["isvalid"],
-      password.current.dataset["isvalid"],
-    ];
-    if (expected_errors.every((el) => el === "true")) {
-      dispatch(sign_in(email.current.value, password.current.value));
+    if (email?.current && password?.current) {
+      const expected_errors = [
+        email.current.dataset["isvalid"],
+        password.current.dataset["isvalid"],
+      ];
+      if (expected_errors.every((el) => el === "true")) {
+        sign_in(email.current.value, password.current.value);
+      }
     }
   };
 
@@ -28,6 +31,10 @@ const SignIn = () => {
     const res = await AuthService.continue_with_google();
     window.location.replace(res.data.authorization_url);
   };
+
+  if (isAuthenticated) {
+    return <Navigate to="/" />
+  }
 
   return (
     <>

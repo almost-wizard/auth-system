@@ -1,18 +1,17 @@
 import React, { useRef } from "react";
 import { FormattedMessage as FM, useIntl } from "react-intl";
-import { useDispatch } from "react-redux";
-import { reset_password } from "../../store/actions/authentication";
+import { useActions } from "../../hooks/useActions";
 import InputGroup from "../UI/InputGroup";
 
-const ResetPassword = () => {
-  const dispatch = useDispatch();
+const ResetPassword: React.FC = () => {
+  const { reset_password } = useActions();
   const intl = useIntl();
-  const email = useRef();
+  const email = useRef<HTMLInputElement>(null);
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (email.current.dataset["isvalid"] === "true") {
-      dispatch(reset_password(email.current.value));
+    if (email?.current && email.current?.dataset["isvalid"] === "true") {
+      reset_password(email.current.value);
     }
   };
 

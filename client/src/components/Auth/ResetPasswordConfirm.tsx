@@ -1,22 +1,26 @@
 import React, { useRef } from "react";
 import { FormattedMessage as FM, useIntl } from "react-intl";
-import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { reset_password_confirm } from "../../store/actions/authentication";
+import { useActions } from "../../hooks/useActions";
 import InputGroup from "../UI/InputGroup";
 
-const ResetPasswordConfirm = () => {
-  const dispatch = useDispatch();
+const ResetPasswordConfirm: React.FC = () => {
+  const { reset_password_confirm } = useActions();
   const queryParams = useParams();
   const intl = useIntl();
-  const new_password = useRef();
+  const new_password = useRef<HTMLInputElement>(null);
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const uid = queryParams.uid;
     const token = queryParams.token;
-    if (new_password.current.dataset["isvalid"] === "true") {
-      dispatch(reset_password_confirm(uid, token, new_password.current.value));
+    if (
+      uid &&
+      token &&
+      new_password?.current &&
+      new_password.current.dataset["isvalid"] === "true"
+    ) {
+      reset_password_confirm(uid, token, new_password.current.value);
     }
   };
 

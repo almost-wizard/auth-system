@@ -1,35 +1,39 @@
 import React, { useRef } from "react";
 import { FormattedMessage as FM, useIntl } from "react-intl";
-import { useDispatch } from "react-redux";
-import { sign_up } from "../../store/actions/authentication";
+import { useActions } from "../../hooks/useActions";
 import InputGroup from "../UI/InputGroup";
 
-const SignUp = () => {
-  const dispatch = useDispatch();
+const SignUp: React.FC = () => {
+  const { sign_up } = useActions();
   const intl = useIntl();
 
-  const first_name = useRef();
-  const last_name = useRef();
-  const email = useRef();
-  const password = useRef();
+  const first_name = useRef<HTMLInputElement>(null);
+  const last_name = useRef<HTMLInputElement>(null);
+  const email = useRef<HTMLInputElement>(null);
+  const password = useRef<HTMLInputElement>(null);
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const expected_errors = [
-      first_name.current.dataset["isvalid"],
-      last_name.current.dataset["isvalid"],
-      email.current.dataset["isvalid"],
-      password.current.dataset["isvalid"],
-    ];
-    if (expected_errors.every((el) => el === "true")) {
-      dispatch(
+    if (
+      email?.current &&
+      password?.current &&
+      first_name?.current &&
+      last_name?.current
+    ) {
+      const expected_errors = [
+        first_name.current.dataset["isvalid"],
+        last_name.current.dataset["isvalid"],
+        email.current.dataset["isvalid"],
+        password.current.dataset["isvalid"],
+      ];
+      if (expected_errors.every((el) => el === "true")) {
         sign_up(
           first_name.current.value,
           last_name.current.value,
           email.current.value,
           password.current.value
-        )
-      );
+        );
+      }
     }
   };
 
