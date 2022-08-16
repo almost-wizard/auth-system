@@ -4,15 +4,15 @@ export const validate = (params) => {
   const rules = VALIDATION_RULES[params.name];
 
   if (!rules) {
-    return "valid_field";
+    return [true, null];
   }
 
   for (const k in rules) {
     const v = rules[k];
     if (VALIDATION_HANDLERS[k]({rule: v, ...params})) {
-      return `invalid_${params.name}_${k}`;
+      return [false, `invalid_${params.name}_${k}`];
     }
   }
 
-  return "valid_field";
+  return [true, null];
 };
